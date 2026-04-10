@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Regex Tester — DevToolbox{% endblock %}
+{% block content %}
+<div class="tool-page">
+  <div class="breadcrumb"><a href="/">Home</a> <span>›</span> <a href="/#tools">Tools</a> <span>›</span> Regex Tester</div>
+  <div class="tool-hd">
+    <div class="tag">// TESTING</div>
+    <h1>Regex Tester</h1>
+    <p>Test regular expressions with live highlighting. Matches update as you type.</p>
+  </div>
+  <div class="panel">
+    <div class="panel-header"><h3>Pattern</h3></div>
+    <div class="panel-body">
+      <div class="input-row">
+        <span style="color:var(--blue-electric);font-family:'JetBrains Mono',monospace;font-weight:500;">/</span>
+        <input type="text" id="regex-pattern" placeholder="\b\w+@\w+\.\w+\b" oninput="testRegex()"/>
+        <span style="color:var(--blue-electric);font-family:'JetBrains Mono',monospace;font-weight:500;">/</span>
+        <input type="text" id="regex-flags" placeholder="flags" style="max-width:100px" oninput="testRegex()" value="g"/>
+        <span id="match-badge" class="match-count" style="display:none"></span>
+      </div>
+    </div>
+  </div>
+  <div id="regex-alert" class="alert"></div>
+  <div class="panel">
+    <div class="panel-header"><h3>Test String</h3></div>
+    <div class="panel-body"><textarea id="regex-input" placeholder="Enter text to test your regex against…" oninput="testRegex()"></textarea></div>
+  </div>
+  <div class="panel">
+    <div class="panel-header"><h3>Matches</h3></div>
+    <div id="regex-output" class="regex-output" style="color:var(--text-muted)">Matches will be highlighted here…</div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+function testRegex(){
+  const p=document.getElementById('regex-pattern').value;
+  const f=document.getElementById('regex-flags').value||'g';
+  const txt=document.getElementById('regex-input').value;
+  const out=document.getElementById('regex-output');
+  const badge=document.getElementById('match-badge');
+  if(!p){out.innerHTML=txt?esc(txt):'Matches will be highlighted here…';badge.style.display='none';return;}
+  try{
+    const re=new RegExp(p,f.includes('g')?f:f+'g');
+    const m=[...txt.matchAll(re)];
+    badge.textContent=m.length+' match'+(m.length!==1?'es':'');
+    badge.style.display=m.length?'inline-block':'none';
+    out.innerHTML=txt.replace(re,s=>`<mark>${esc(s)}</mark>`)||'<span style="color:var(--text-muted)">No input…</span>';
+    document.getElementById('regex-alert').classList.remove('show');
+  }catch(e){showAlert('regex-alert','✗ Invalid regex: '+e.message);badge.style.display='none';out.innerHTML=esc(txt);}
+}
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+</script>
+{% endblock %}

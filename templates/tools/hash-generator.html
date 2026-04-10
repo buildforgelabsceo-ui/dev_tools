@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Hash Generator — DevToolbox{% endblock %}
+{% block content %}
+<div class="tool-page">
+  <div class="breadcrumb"><a href="/">Home</a> <span>›</span> <a href="/#tools">Tools</a> <span>›</span> Hash Generator</div>
+  <div class="tool-hd">
+    <div class="tag">// SECURITY</div>
+    <h1>Hash Generator</h1>
+    <p>Generate cryptographic hashes from any text. SHA-1, SHA-256, SHA-384, and SHA-512.</p>
+  </div>
+  <div class="panel">
+    <div class="panel-header"><h3>Input</h3><button class="btn btn-ghost" onclick="clearAll()">Clear</button></div>
+    <div class="panel-body"><textarea id="hash-input" placeholder="Enter text to hash…" oninput="generateHashes()" style="min-height:140px;"></textarea></div>
+    <div class="action-bar"><button class="btn btn-primary" onclick="generateHashes()">⚡ Generate Hashes</button></div>
+  </div>
+  <div class="panel" style="margin-top:1rem">
+    <div class="panel-header"><h3>Hash Results</h3></div>
+    <div style="padding:0">
+      <table class="hash-table">
+        <tr><td>SHA-1</td><td><span id="sha1" style="color:var(--text-muted)">—</span></td><td style="width:70px;padding-right:1.25rem"><button class="btn btn-ghost" onclick="copyHash('sha1')">Copy</button></td></tr>
+        <tr><td>SHA-256</td><td><span id="sha256" style="color:var(--text-muted)">—</span></td><td style="width:70px;padding-right:1.25rem"><button class="btn btn-ghost" onclick="copyHash('sha256')">Copy</button></td></tr>
+        <tr><td>SHA-384</td><td><span id="sha384" style="color:var(--text-muted)">—</span></td><td style="width:70px;padding-right:1.25rem"><button class="btn btn-ghost" onclick="copyHash('sha384')">Copy</button></td></tr>
+        <tr><td>SHA-512</td><td><span id="sha512" style="color:var(--text-muted)">—</span></td><td style="width:70px;padding-right:1.25rem"><button class="btn btn-ghost" onclick="copyHash('sha512')">Copy</button></td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+async function generateHashes(){const txt=document.getElementById('hash-input').value;const ids=['sha1','sha256','sha384','sha512'];if(!txt){ids.forEach(id=>{const el=document.getElementById(id);el.textContent='—';el.style.color='var(--text-muted)';});return;}
+const enc=new TextEncoder().encode(txt);const algos={'sha1':'SHA-1','sha256':'SHA-256','sha384':'SHA-384','sha512':'SHA-512'};for(const[id,algo]of Object.entries(algos)){const buf=await crypto.subtle.digest(algo,enc);const hex=Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');const el=document.getElementById(id);el.textContent=hex;el.style.color='var(--text-primary)';}}
+function copyHash(id){const v=document.getElementById(id).textContent;if(v&&v!=='—')copyToClipboard(v,event.target);}
+function clearAll(){document.getElementById('hash-input').value='';generateHashes();}
+</script>
+{% endblock %}

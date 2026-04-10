@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Text Diff — DevToolbox{% endblock %}
+{% block content %}
+<div class="tool-page">
+  <div class="breadcrumb"><a href="/">Home</a> <span>›</span> <a href="/#tools">Tools</a> <span>›</span> Text Diff</div>
+  <div class="tool-hd">
+    <div class="tag">// COMPARISON</div>
+    <h1>Text Diff Tool</h1>
+    <p>Compare two blocks of text and see additions and removals highlighted in real time.</p>
+  </div>
+  <div class="two-col">
+    <div class="panel"><div class="panel-header"><h3>Original</h3></div><div class="panel-body"><textarea id="diff-left" placeholder="Paste original text…" oninput="diffTexts()" style="min-height:220px;"></textarea></div></div>
+    <div class="panel"><div class="panel-header"><h3>Modified</h3></div><div class="panel-body"><textarea id="diff-right" placeholder="Paste modified text…" oninput="diffTexts()" style="min-height:220px;"></textarea></div></div>
+  </div>
+  <div style="display:flex;gap:0.75rem;margin:1rem 0;">
+    <button class="btn btn-primary" onclick="diffTexts()">⚡ Compare</button>
+    <button class="btn btn-ghost" onclick="clearAll()">Clear</button>
+  </div>
+  <div class="panel">
+    <div class="panel-header">
+      <h3>Diff Result</h3>
+      <div style="display:flex;gap:1rem;font-size:0.75rem;align-items:center;">
+        <span style="color:var(--blue-glow)">+ Added</span>
+        <span style="color:#fca5a5">− Removed</span>
+      </div>
+    </div>
+    <div id="diff-output" class="diff-output" style="color:var(--text-muted)">Diff will appear here…</div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+function diffTexts(){const L=document.getElementById('diff-left').value.split('\n'),R=document.getElementById('diff-right').value.split('\n'),out=document.getElementById('diff-output');if(!L[0]&&!R[0]){out.innerHTML='<span style="color:var(--text-muted)">Diff will appear here…</span>';return;}
+const m=Array.from({length:L.length+1},(_,i)=>Array.from({length:R.length+1},(_,j)=>i===0?j:j===0?i:0));for(let i=1;i<=L.length;i++)for(let j=1;j<=R.length;j++)m[i][j]=L[i-1]===R[j-1]?m[i-1][j-1]:1+Math.min(m[i-1][j],m[i][j-1],m[i-1][j-1]);
+const res=[];let i=L.length,j=R.length;while(i>0||j>0){if(i>0&&j>0&&L[i-1]===R[j-1]){res.unshift({t:'e',s:L[i-1]});i--;j--;}else if(j>0&&(i===0||m[i][j-1]<=m[i-1][j])){res.unshift({t:'a',s:R[j-1]});j--;}else{res.unshift({t:'r',s:L[i-1]});i--;}}
+const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+out.innerHTML=res.map(r=>r.t==='a'?`<span class="diff-add">+ ${esc(r.s)}</span>`:r.t==='r'?`<span class="diff-remove">− ${esc(r.s)}</span>`:`<span class="diff-equal">  ${esc(r.s)}</span>`).join('')||'<span style="color:var(--blue-glow)">✓ No differences</span>';}
+function clearAll(){document.getElementById('diff-left').value='';document.getElementById('diff-right').value='';document.getElementById('diff-output').innerHTML='<span style="color:var(--text-muted)">Diff will appear here…</span>';}
+</script>
+{% endblock %}

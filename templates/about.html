@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}About — DevToolbox{% endblock %}
+{% block content %}
+<div class="about-page">
+  <div class="section-tag">// Our Story</div>
+  <h1>Built For<br><span style="color:var(--blue-bright);text-shadow:0 0 40px rgba(47,130,255,0.4)">Developers</span><br>By Developers</h1>
+  <p>DevToolbox is a collection of fast, browser-based utilities designed to speed up everyday development workflows. No accounts, no tracking, no fluff — just tools that work.</p>
+  <p>Every tool runs entirely in your browser. Your data never leaves your machine. We believe developer tools should be instant, private, and accessible to everyone for free.</p>
+  <p>The platform is designed to grow. Adding a new tool takes minutes — create a template, register it in the app, done. We're constantly expanding based on what developers actually need.</p>
+  <div style="margin-top:3rem">
+    <a href="/#tools" class="btn-cta-primary" style="display:inline-flex;align-items:center;gap:0.6rem;font-size:0.82rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;background:var(--blue-core);color:#fff;padding:0.9rem 2rem;border-radius:6px;text-decoration:none;box-shadow:0 0 30px rgba(26,110,248,0.5)">Browse All {{ tools|length }} Tools →</a>
+  </div>
+</div>
+{% endblock %}

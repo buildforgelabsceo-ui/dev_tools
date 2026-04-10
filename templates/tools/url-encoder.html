@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}URL Encoder — DevToolbox{% endblock %}
+{% block content %}
+<div class="tool-page">
+  <div class="breadcrumb"><a href="/">Home</a> <span>›</span> <a href="/#tools">Tools</a> <span>›</span> URL Encoder</div>
+  <div class="tool-hd">
+    <div class="tag">// ENCODING</div>
+    <h1>URL Encoder / Decoder</h1>
+    <p>Encode special characters in URLs or decode percent-encoded strings back to plain text.</p>
+  </div>
+  <div class="panel">
+    <div class="panel-header"><h3>Input</h3><button class="btn btn-ghost" onclick="clearAll()">Clear</button></div>
+    <div class="panel-body"><textarea id="url-input" placeholder="Enter a URL or text to encode / decode…"></textarea></div>
+    <div class="action-bar">
+      <button class="btn btn-primary" onclick="encodeURL()">→ Encode</button>
+      <button class="btn btn-secondary" onclick="decodeURL()">← Decode</button>
+      <label style="display:flex;align-items:center;gap:0.5rem;color:var(--text-secondary);font-size:0.82rem;margin-left:auto">
+        <input type="checkbox" id="full-enc" style="accent-color:var(--blue-bright)"/> Full encode
+      </label>
+    </div>
+  </div>
+  <div id="url-alert" class="alert"></div>
+  <div class="panel">
+    <div class="panel-header"><h3>Output</h3><button class="btn btn-ghost" onclick="copyOutput()">Copy</button></div>
+    <div class="panel-body"><textarea id="url-output" placeholder="Result will appear here…" readonly></textarea></div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+function encodeURL(){const v=document.getElementById('url-input').value;if(!v)return showAlert('url-alert','Enter some text first.');const full=document.getElementById('full-enc').checked;document.getElementById('url-output').value=full?encodeURIComponent(v):encodeURI(v);showAlert('url-alert','✓ Encoded!','success');}
+function decodeURL(){const v=document.getElementById('url-input').value.trim();if(!v)return showAlert('url-alert','Enter some text first.');try{document.getElementById('url-output').value=decodeURIComponent(v);showAlert('url-alert','✓ Decoded!','success');}catch(e){showAlert('url-alert','✗ Invalid URL encoding.');}}
+function clearAll(){document.getElementById('url-input').value='';document.getElementById('url-output').value='';}
+function copyOutput(){const v=document.getElementById('url-output').value;if(v)copyToClipboard(v,event.target);}
+</script>
+{% endblock %}

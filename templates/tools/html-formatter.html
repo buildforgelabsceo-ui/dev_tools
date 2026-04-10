@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}HTML Formatter — DevToolbox{% endblock %}
+{% block content %}
+<div class="tool-page">
+  <div class="breadcrumb"><a href="/">Home</a> <span>›</span> <a href="/#tools">Tools</a> <span>›</span> HTML Formatter</div>
+  <div class="tool-hd">
+    <div class="tag">// FORMATTING</div>
+    <h1>HTML Formatter</h1>
+    <p>Beautify and indent messy HTML markup into clean, readable code.</p>
+  </div>
+  <div class="panel">
+    <div class="panel-header"><h3>Input HTML</h3><button class="btn btn-ghost" onclick="clearAll()">Clear</button></div>
+    <div class="panel-body"><textarea id="html-input" placeholder="<div><p>Paste your messy HTML here...</p></div>"></textarea></div>
+    <div class="action-bar">
+      <button class="btn btn-primary" onclick="formatHTML()">⚡ Format HTML</button>
+      <label style="display:flex;align-items:center;gap:0.5rem;color:var(--text-secondary);font-size:0.82rem;">Indent:<select id="indent-size" style="margin-left:0.25rem;padding:0.3rem 0.6rem;font-size:0.82rem;"><option value="2">2 spaces</option><option value="4" selected>4 spaces</option><option value="tab">Tab</option></select></label>
+    </div>
+  </div>
+  <div id="html-alert" class="alert"></div>
+  <div class="panel">
+    <div class="panel-header"><h3>Output</h3><button class="btn btn-ghost" onclick="copyOutput()">Copy</button></div>
+    <div class="panel-body"><textarea id="html-output" placeholder="Formatted HTML will appear here…" readonly></textarea></div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+function formatHTML(){const input=document.getElementById('html-input').value.trim();if(!input)return showAlert('html-alert','Please enter some HTML first.');const iv=document.getElementById('indent-size').value;const ind=iv==='tab'?'\t':' '.repeat(parseInt(iv));const voids=new Set(['area','base','br','col','embed','hr','img','input','link','meta','param','source','track','wbr']);try{let lv=0,res=[];const toks=input.replace(/>\s+</g,'><').replace(/</g,'\n<').replace(/>/g,'>\n').split('\n').map(s=>s.trim()).filter(Boolean);for(const t of toks){if(t.startsWith('</')){lv=Math.max(0,lv-1);res.push(ind.repeat(lv)+t);}else if(t.startsWith('<')&&!t.startsWith('<!') &&!t.startsWith('<?')){const tn=(t.match(/<([a-zA-Z0-9-]+)/)||[])[1]||'';res.push(ind.repeat(lv)+t);if(!voids.has(tn.toLowerCase())&&!t.endsWith('/>'))lv++;}else{res.push(ind.repeat(lv)+t);}}document.getElementById('html-output').value=res.join('\n');showAlert('html-alert','✓ Formatted!','success');}catch(e){showAlert('html-alert','✗ Error: '+e.message);}}
+function clearAll(){document.getElementById('html-input').value='';document.getElementById('html-output').value='';}
+function copyOutput(){const v=document.getElementById('html-output').value;if(v)copyToClipboard(v,event.target);}
+</script>
+{% endblock %}

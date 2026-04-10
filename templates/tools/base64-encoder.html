@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Base64 Encoder — DevToolbox{% endblock %}
+{% block content %}
+<div class="tool-page">
+  <div class="breadcrumb"><a href="/">Home</a> <span>›</span> <a href="/#tools">Tools</a> <span>›</span> Base64 Encoder</div>
+  <div class="tool-hd">
+    <div class="tag">// ENCODING</div>
+    <h1>Base64 Encoder / Decoder</h1>
+    <p>Encode plain text to Base64 or decode Base64 strings back to readable text.</p>
+  </div>
+  <div class="panel">
+    <div class="panel-header"><h3>Input</h3><button class="btn btn-ghost" onclick="clearAll()">Clear</button></div>
+    <div class="panel-body"><textarea id="b64-input" placeholder="Enter text to encode, or a Base64 string to decode…"></textarea></div>
+    <div class="action-bar">
+      <button class="btn btn-primary" onclick="encode()">→ Encode to Base64</button>
+      <button class="btn btn-secondary" onclick="decode()">← Decode Base64</button>
+    </div>
+  </div>
+  <div id="b64-alert" class="alert"></div>
+  <div class="panel">
+    <div class="panel-header"><h3>Output</h3><button class="btn btn-ghost" onclick="copyOutput()">Copy</button></div>
+    <div class="panel-body"><textarea id="b64-output" placeholder="Result will appear here…" readonly></textarea></div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+function encode(){const v=document.getElementById('b64-input').value;if(!v)return showAlert('b64-alert','Enter some text first.');try{document.getElementById('b64-output').value=btoa(unescape(encodeURIComponent(v)));showAlert('b64-alert','✓ Encoded!','success');}catch(e){showAlert('b64-alert','✗ Error: '+e.message);}}
+function decode(){const v=document.getElementById('b64-input').value.trim();if(!v)return showAlert('b64-alert','Enter a Base64 string first.');try{document.getElementById('b64-output').value=decodeURIComponent(escape(atob(v)));showAlert('b64-alert','✓ Decoded!','success');}catch(e){showAlert('b64-alert','✗ Invalid Base64 string.');}};
+function clearAll(){document.getElementById('b64-input').value='';document.getElementById('b64-output').value='';}
+function copyOutput(){const v=document.getElementById('b64-output').value;if(v)copyToClipboard(v,event.target);}
+</script>
+{% endblock %}

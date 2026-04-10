@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>{% block title %}Nero Code — Developer Tools{% endblock %}</title>
+  <meta name="description"
+    content="{% block description %}Fast, browser-based developer utilities. Zero sign-ups, zero tracking.{% endblock %}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='14' fill='%23F5C249'/><text y='.9em' font-size='60' x='20'>⌨</text></svg>" />
+</head>
+
+<body>
+  <canvas id="starfield"></canvas>
+
+  <nav>
+    <a href="/" class="nav-logo">
+      <div class="logo-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+          stroke-linejoin="round">
+          <polyline points="16 18 22 12 16 6" />
+          <polyline points="8 6 2 12 8 18" />
+        </svg>
+      </div>
+      <span>Nero Code</span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="/" {% if request.path=='/' %}class="active" {% endif %}>Products</a></li>
+      <li><a href="/#tools" {% if request.path.startswith('/tools') %}class="active" {% endif %}>Resources</a></li>
+      <li><a href="/about">About</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <!-- <a href="#" class="btn-signin">Sign In</a>
+      <a href="#" class="btn-demo">Book a Demo</a> -->
+    </div>
+  </nav>
+
+  <main>{% block content %}{% endblock %}</main>
+
+  <footer>
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="/#tools">All Tools</a>
+      <a href="/about">About</a>
+      <a href="/tools/json-formatter">JSON</a>
+      <a href="/tools/base64-encoder">Base64</a>
+      <a href="/tools/regex-tester">Regex</a>
+      <a href="/tools/hash-generator">Hash</a>
+    </div>
+    <p>&copy; 2026 Nero Code &nbsp;·&nbsp; Fast, free, browser-based developer utilities &nbsp;·&nbsp; Zero sign-ups</p>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+
+</html>

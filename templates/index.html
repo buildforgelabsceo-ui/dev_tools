@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-eyebrow">
+    <span>{ Nerocode Fix }</span>
+  </div>
+
+  <h1>
+    Create
+    <span class="play-pill">
+      <svg viewBox="0 0 24 24">
+        <path d="M5 3l14 9-14 9V3z" />
+      </svg>
+    </span>
+    an AI-Powered<br>
+    dev tool for your workflow
+  </h1>
+
+  <div class="hero-ctas">
+    <a href="#tools" class="btn-explore">
+      Explore Tools
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+      </svg>
+    </a>
+
+    <div class="hero-social">
+      <div class="hero-social-avatars">
+        <img src="https://i.pravatar.cc/100?img=1" alt="">
+        <img src="https://i.pravatar.cc/100?img=2" alt="">
+        <img src="https://i.pravatar.cc/100?img=3" alt="">
+        <div class="avatar-more">+</div>
+      </div>
+      <div class="hero-social-text">
+        <p>Trusted by</p>
+        <span>developers worldwide</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FEATURE CARDS ── -->
+<div class="feature-cards fade-up">
+
+  <!-- Card 1: Terminal mock -->
+  <div class="feat-card glass-panel">
+    <a href="#tools" class="card-arrow">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M7 17L17 7M17 7H7M17 7v10" />
+      </svg>
+    </a>
+    <div class="card-body">
+      <div class="mock-terminal">
+        <div class="mock-terminal-bar">
+          <span class="dot red"></span>
+          <span class="dot yellow"></span>
+          <span class="dot green"></span>
+          <span class="mock-lbl">terminal</span>
+        </div>
+        <div class="mock-terminal-body">
+          <p class="t-muted">$ nerocode init</p>
+          <p class="t-green">✔ Environment ready</p>
+          <p class="t-yellow">&gt; Analyzing stack...</p>
+          <p class="t-blue">&gt; 3 tools optimized</p>
+        </div>
+      </div>
+    </div>
+    <div class="card-info">
+      <h3>Create custom workflows</h3>
+      <p>Build tailored dev tools and streamline your entire codebase.</p>
+    </div>
+  </div>
+
+  <!-- Card 2: Yellow hero card -->
+  <div class="feat-card card-yellow">
+    <h3>Easily Deploy on<br>Multi-Channels</h3>
+    <div class="bot-stage">
+      <div class="bot-orb"></div>
+      <div class="bot-face">
+        <div class="eyes">
+          <div class="eye"></div>
+          <div class="eye"></div>
+        </div>
+      </div>
+      <div class="bubble br">Hey 👋</div>
+      <div class="bubble bl">Ready to build! 🚀</div>
+    </div>
+  </div>
+
+  <!-- Card 3: Upload zone -->
+  <div class="feat-card glass-panel">
+    <div class="card-3-badge"><span>Try now for free</span></div>
+    <p class="card-3-title">Format any Code</p>
+    <p class="card-3-sub">Upload a JSON or text file to format</p>
+    <div class="upload-zone">
+      <div class="upload-drop" onclick="document.getElementById('search-input')?.focus()">
+        <div class="upload-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+            <polyline points="14 2 14 8 20 8" />
+            <line x1="16" y1="13" x2="8" y2="13" />
+            <line x1="16" y1="17" x2="8" y2="17" />
+            <polyline points="10 9 9 9 8 9" />
+          </svg>
+        </div>
+        <p>Drag and drop it here or <a>browse</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── DIVIDER ── -->
+<div class="section-divider"></div>
+
+<!-- ── TOOLS ── -->
+<section id="tools" class="tools-section fade-up">
+  <div class="tools-header">
+    <div class="tools-eyebrow">
+      <span class="slash">//</span> DEVELOPER LIBRARY
+    </div>
+    <h2>Your Unified <strong>Toolkit</strong></h2>
+
+    <div class="search-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8" />
+        <path d="m21 21-4.35-4.35" />
+      </svg>
+      <input type="search" id="search-input" placeholder="Search for formatters, encoders, regex…" autocomplete="off" />
+    </div>
+  </div>
+
+  <div class="tools-grid">
+    {% for tool in tools %}
+    <div class="tool-card-wrap" data-name="{{ tool.name|lower }}" data-category="{{ tool.category|lower }}"
+      data-desc="{{ tool.description|lower }}" style="transition-delay:{{ loop.index0 * 55 }}ms">
+      <a href="/tools/{{ tool.id }}" class="tool-card">
+        <div class="tc-top">
+          <div class="tc-icon">{{ tool.icon }}</div>
+          <span class="tc-badge">{{ tool.category }}</span>
+        </div>
+        <div class="tc-name">{{ tool.name }}</div>
+        <div class="tc-desc">{{ tool.description }}</div>
+        <div class="tc-footer">
+          <span class="tc-cta">
+            Launch Tool
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </span>
+          <span class="tc-diag">↗</span>
+        </div>
+      </a>
+    </div>
+    {% endfor %}
+
+    <div id="no-results" class="no-results">
+      <div class="nr-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8" />
+          <path d="m21 21-4.35-4.35" />
+          <line x1="8" y1="11" x2="14" y2="11" />
+        </svg>
+      </div>
+      <h3>No tools found</h3>
+      <p>Try "json", "encode", "hash", or "diff"</p>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

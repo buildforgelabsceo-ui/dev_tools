@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}JSON Formatter — DevToolbox{% endblock %}
+{% block content %}
+<div class="tool-page">
+  <div class="breadcrumb"><a href="/">Home</a> <span>›</span> <a href="/#tools">Tools</a> <span>›</span> JSON Formatter</div>
+  <div class="tool-hd">
+    <div class="tag">// FORMATTING</div>
+    <h1>JSON Formatter</h1>
+    <p>Beautify and validate JSON with proper indentation. Paste raw JSON and hit Format.</p>
+  </div>
+  <div class="panel">
+    <div class="panel-header"><h3>Input</h3><button class="btn btn-ghost" onclick="clearAll()">Clear</button></div>
+    <div class="panel-body"><textarea id="json-input" placeholder='{"name":"DevToolbox","tools":["JSON","Base64","Regex"]}'></textarea></div>
+    <div class="action-bar">
+      <button class="btn btn-primary" onclick="formatJSON()">⚡ Format</button>
+      <button class="btn btn-secondary" onclick="minifyJSON()">Minify</button>
+      <button class="btn btn-secondary" onclick="validateJSON()">Validate</button>
+    </div>
+  </div>
+  <div id="json-alert" class="alert"></div>
+  <div class="panel">
+    <div class="panel-header"><h3>Output</h3><button class="btn btn-ghost" onclick="copyOutput()">Copy</button></div>
+    <div class="panel-body"><textarea id="json-output" placeholder="Formatted JSON will appear here…" readonly></textarea></div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+function formatJSON(){const v=document.getElementById('json-input').value.trim();if(!v)return showAlert('json-alert','Please enter some JSON first.');try{document.getElementById('json-output').value=JSON.stringify(JSON.parse(v),null,2);showAlert('json-alert','✓ Formatted!','success');}catch(e){showAlert('json-alert','✗ Invalid JSON: '+e.message);}}
+function minifyJSON(){const v=document.getElementById('json-input').value.trim();if(!v)return showAlert('json-alert','Please enter some JSON first.');try{document.getElementById('json-output').value=JSON.stringify(JSON.parse(v));showAlert('json-alert','✓ Minified!','success');}catch(e){showAlert('json-alert','✗ Invalid JSON: '+e.message);}}
+function validateJSON(){const v=document.getElementById('json-input').value.trim();if(!v)return showAlert('json-alert','Please enter some JSON first.');try{JSON.parse(v);showAlert('json-alert','✓ Valid JSON!','success');}catch(e){showAlert('json-alert','✗ Invalid JSON: '+e.message);}}
+function clearAll(){document.getElementById('json-input').value='';document.getElementById('json-output').value='';}
+function copyOutput(){const v=document.getElementById('json-output').value;if(v)copyToClipboard(v,event.target);}
+</script>
+{% endblock %}
