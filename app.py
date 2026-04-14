@@ -1,8 +1,12 @@
 from flask import Flask, render_template, jsonify
 import json
-
+from flask import current_app, send_from_directory
 app = Flask(__name__)
 
+
+@main.route('/sitemap.xml')
+def sitemap():
+    return send_from_directory(current_app.static_folder, 'sitemap.xml')
 TOOLS = [
     {
         "id": "json-formatter",
