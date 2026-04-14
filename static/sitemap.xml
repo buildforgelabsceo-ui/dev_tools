@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+
+<url>
+  <loc>https://dev.buildforgelabs.com/</loc>
+  <lastmod>2026-04-14T08:37:14+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://dev.buildforgelabs.com/about</loc>
+  <lastmod>2026-04-14T08:37:14+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dev.buildforgelabs.com/tools/json-formatter</loc>
+  <lastmod>2026-04-14T08:37:14+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dev.buildforgelabs.com/tools/base64-encoder</loc>
+  <lastmod>2026-04-14T08:37:14+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dev.buildforgelabs.com/tools/regex-tester</loc>
+  <lastmod>2026-04-14T08:37:14+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dev.buildforgelabs.com/tools/url-encoder</loc>
+  <lastmod>2026-04-14T08:37:14+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dev.buildforgelabs.com/tools/jwt-decoder</loc>
+  <lastmod>2026-04-14T08:37:14+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dev.buildforgelabs.com/tools/hash-generator</loc>
+  <lastmod>2026-04-14T08:37:14+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dev.buildforgelabs.com/tools/text-diff</loc>
+  <lastmod>2026-04-14T08:37:14+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dev.buildforgelabs.com/tools/html-formatter</loc>
+  <lastmod>2026-04-14T08:37:14+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+
+
+</urlset>
