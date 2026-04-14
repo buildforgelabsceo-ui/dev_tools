@@ -4,9 +4,7 @@ from flask import current_app, send_from_directory
 app = Flask(__name__)
 
 
-@main.route('/sitemap.xml')
-def sitemap():
-    return send_from_directory(current_app.static_folder, 'sitemap.xml')
+
 TOOLS = [
     {
         "id": "json-formatter",
@@ -73,7 +71,9 @@ TOOLS = [
         "color": "#7c3aed"
     }
 ]
-
+@app.route('/sitemap.xml')
+def sitemap():
+    return send_from_directory('static', 'sitemap.xml')
 @app.route('/')
 def index():
     return render_template('index.html', tools=TOOLS)
